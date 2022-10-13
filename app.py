@@ -21,11 +21,11 @@ app = Flask(__name__)
 ckeditor = CKEditor(app)
 
 #create database (This is a new db)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:PASSword123@localhost/users'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:PASSword123@localhost/users'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:PASSword123@localhost/blog'
 
 #create a heroku database for deployment postgresql
-# app.config['SQLALCHEMY_DATABASE_URI'] =  'postgres://gfntgvspykdgfn:2a680a3255e7ba55cc2deb89898cfc6b0e1018ca1acc7e14f3a9a5bbbc9eefe4@ec2-54-173-237-110.compute-1.amazonaws.com:5432/d2bdjag779666c'
+app.config['SQLALCHEMY_DATABASE_URI'] =  'postgres://gfntgvspykdgfn:2a680a3255e7ba55cc2deb89898cfc6b0e1018ca1acc7e14f3a9a5bbbc9eefe4@ec2-54-173-237-110.compute-1.amazonaws.com:5432/d2bdjag779666c'
 
 #create a seceret key for wtforms
 app.config['SECRET_KEY'] = 'my secret key is my name'
