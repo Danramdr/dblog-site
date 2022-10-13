@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add User Page
+{% endblock %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">        
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+
+{% if name %}
+    <h1>Hi {{ name }}!</h1>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Username</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone Number</th>
+            </tr>
+        </thead>
+
+        {% for our_user in our_users %}
+        
+        <tbody>
+            <tr>
+                <td scope="row">{{ our_user.id }}.</td> 
+                <td> <a href="{{ url_for('user_update', id = our_user.id) }}"> {{ our_user.name }} </a> </td> - 
+                <td> {{ our_user.username }} </td>
+                <td> {{ our_user.email }} </td>
+                <td> {{ our_user.phone_number }} </td>
+            </tr>
+        </tbody>
+
+        {% endfor %}
+    </table>
+
+{% else %}
+    <h1>Enter your details</h1><br>
+
+    <div class="shadow p-3 mb-5 bg-body rounded">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            {{ form.name.label(class="form-label") }} 
+
+            {{ form.name(class="form-control") }}<br>
+
+            {{ form.email.label(class="form-label") }} 
+
+            {{ form.email(class="form-control") }}<br>
+
+            {{ form.username.label(class="form-label") }} 
+
+            {{ form.username(class="form-control") }}<br>
+            
+            {{ form.phone_number.label(class="form-label") }} 
+
+            {{ form.phone_number(class="form-control") }}<br>
+
+            {{ form.password_hash.label(class="form-label") }} 
+
+            {{ form.password_hash(class="form-control") }}<br>
+
+            {{ form.password_hash1.label(class="form-label") }} 
+
+            {{ form.password_hash1(class="form-control") }}<br>
+
+            {{ form.submit(class="btn btn-dark") }}<br>
+
+        </form>
+    </div><br><br>
+
+    <h1>Users Data</h1>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Username</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone Number</th>
+            </tr>
+        </thead>
+
+        {% for our_user in our_users %}
+        
+        <tbody>
+            <tr>
+                <td scope="row">{{ our_user.id }}.</td> 
+                <td> <a href="{{ url_for('user_update', id = our_user.id) }}"> {{ our_user.name }} </a> </td> 
+                <td> {{ our_user.username }} </td>
+                <td> {{ our_user.email }} </td>
+                <td> {{ our_user.phone_number }} </td>
+                <!-- <td> {{ our_user.password_hash }} </td> -->
+                <td> <a href="{{ url_for('user_delete', id = our_user.id) }}"> Delete</a> </td>
+            </tr>
+        </tbody>
+
+        {% endfor %}
+    </table>
+{% endif %}
+
+{% endblock %}

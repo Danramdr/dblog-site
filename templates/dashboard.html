@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Dashboard Page
+{% endblock %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">        
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+    <h1>Welcome to Dashboard</h1><br>
+    <h2>You are logged In</h2><br>
+
+    <div class="card">
+        <h5 class="card-header">{{ current_user.name }}</h5>
+        <div class="card-body">
+          <h5 class="card-title">Welcome To Your Dashboard</h5>
+          <p class="card-text"><h2>Your Details:</h2>
+            <div class="container">
+              <div class="row">
+                <div class="col-8">
+                    <strong>Name:</strong> {{ current_user.name }}<br>
+                    <strong>Email:</strong> {{ current_user.email }}<br>
+                    <strong>Username:</strong> {{ current_user.username }}<br>
+                    <strong>User Id:</strong> {{ current_user.id }}<br>
+                    <strong>Phone Number:</strong> {{ current_user.phone_number }}<br>
+                    <strong>Login Date:</strong> {{ current_user.date_added }}<br>
+                    <strong>About Author:</strong> {{ current_user.about_author }}<br>
+                    <strong>Profile Picture:</strong> {{ current_user.profile_pic }}<br></p>
+                    <a href="{{ url_for('logout') }}" class="btn btn-dark btn-sm">Logout</a>
+                    <a href="{{ url_for('user_update', id = current_user.id) }}", class="btn btn-primary btn-sm">Update</a>
+                    <a class="btn btn-danger btn-sm" href="{{ url_for('user_delete', id = current_user.id) }}"> Delete</a> 
+                </div>
+                  <div class="col-4">
+                    <img src="/static/images/deafultpicture.webp" alt="deafult profile picture" width="200" align="right">
+                  </div>
+              </div>
+            </div>
+        </div>
+      </div>   
+    
+{% endblock %}

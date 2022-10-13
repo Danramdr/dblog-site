@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}
+    User Update
+{% endblock %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">        
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+
+{% if title %}
+    <h1>{{ blog_to_update.title }} Blog Update!!!</h1>
+
+    Author: {{ blog_to_update.author }}<br>
+    Slug : {{ blog_to_update.slug }}<br>
+    Date: {{ blog_to_update.date_posted }}<br>
+    Content: {{ blog_to_update.content | safe }}<br> -->
+ 
+{% else %}
+
+    <h1>Blog Update</h1><br>
+
+    <div class="shadow p-3 mb-5 bg-body rounded">
+        <form action="/blog/update/{{ blog_to_update.id }}" method="POST"> 
+            {{ form.hidden_tag() }}
+
+            {{ form.title.label(class="form-label") }} 
+
+            {{ form.title(class="form-control") }}<br>
+            
+            {{ form.slug.label(class="form-label") }} 
+
+            {{ form.slug(class="form-control") }}<br>
+
+            {{ form.content.label(class="form-label") }} 
+
+            {{ form.content(class="form-control", rows=5) }}<br>
+
+            {{ form.submit(class="btn btn-dark") }}
+
+            <a href="{{ url_for('blog_delete', id=blog_to_update.id) }}", class="btn btn-danger"> Delete</a>
+
+        </form>
+    </div>
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='content') }}
+
+{% endif %}
+
+{% endblock %}

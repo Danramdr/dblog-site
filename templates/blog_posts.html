@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Blog Posts
+{% endblock %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">        
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+
+{% if current_user.is_authenticated %}
+
+    <h1>Blog Posts</h1><br>
+
+    {% for our_blog in our_blogs %}
+
+        <div class="shadow p-3 mb-5 bg-body rounded">
+            <br>{{ our_blog.id }}.Blog Title: {{ our_blog.title }}<br>
+            By: {{ our_blog.users.name }}<br>
+            Blog Slug: {{ our_blog.slug }}<br>
+            Date: {{ our_blog.date_posted }}<br>
+            About Author: {{ our_blog.users.about_author }}<br>
+            Blog Content: {{ our_blog.content | safe }}<br><hr>            
+            <a href="{{ url_for('blog_post', id=our_blog.id) }}", class="btn btn-dark btn-sm">View Post</a>
+
+            {% if our_blog.users.id == current_user.id  %}
+            <a href="{{ url_for('blog_delete', id=our_blog.id) }}", class="btn btn-danger btn-sm"> Delete</a>
+            <a href="{{ url_for('blog_update', id=our_blog.id) }}", class="btn btn-primary btn-sm" >Edit post</a>
+            {% endif %}
+        </div>    
+        
+        {{ ckeditor.load() }}
+        {{ ckeditor.config(name='content') }}
+
+    {% endfor %}
+{% else %}
+    <h1>You have to login to access this page</h1>
+    <a href="{{ url_for('login') }}", class="btn btn-primary"> LogIn </a>
+{% endif %}
+
+{% endblock %}
